@@ -3,6 +3,11 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { Sparkles } from "lucide-react";
+import Navbar from "../components/navbar/NavBar";
+import TechMarquee from "../components/TechMarquee";
+import Footer from "../components/footer/Footer";
+import SectionLabel from "../components/SectionTitle";
+import About from "../components/about/AboutSection";
 
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -11,6 +16,7 @@ interface PortfolioItem {
   title: string;
   desc: string;
   bg: string;
+  bgImg:string;
   url:string;
 }
 
@@ -27,56 +33,58 @@ interface FaqItem {
 }
 
 // ─── Data ────────────────────────────────────────────────────────────────────
-const NAV_LINKS = ["Portfolio", "Services", "FAQ", "About"];
 
-const TECH_LOGOS: string[] = [
-  "OpenAI", "Claude", "xAI", "Supabase", "Vercel",
-  "Cloudflare", "Next.js", "Tailwind CSS", "Prisma", "TypeScript",
-];
+
 
 const PORTFOLIO: PortfolioItem[] = [
   {
-    tag: "AUTOMOTIVE",
-    title: "GutachterMK",
-    desc: "Kfz-Sachverständigenbüro für Schadensgutachten. Modernes Design mit 24/7-Verfügbarkeit.",
+    tag: "E-COMMERCE",
+    title: "Charme.ma",
+    desc: "A highly responsive and aesthetic website for a cosmetique e-commerce store.",
     bg: "from-slate-100 to-slate-200",
+    bgImg: "/assets/project-images/charme.png",
     url: "https://www.charme.ma",
   },
-  {
-    tag: "PHOTOGRAPHY",
-    title: "NanoPictures",
-    desc: "Professional photography from Kassel. Weddings, couple and family portraits with 100+ documented events.",
-    bg: "from-stone-100 to-stone-200",
-    url: "https://www.charme.ma",
-  },
-  {
-    tag: "FINANCE",
-    title: "Propvex Capital",
-    desc: "Investment and capital management. Professional financial platform with elegant design.",
-    bg: "from-zinc-100 to-zinc-200",
-    url: "https://www.charme.ma",
-  },
-  {
-    tag: "GASTRONOMY",
-    title: "Steakclub New York",
-    desc: "Exclusive steakhouse website with modern reservation system and digital menu.",
-    bg: "from-red-50 to-red-100",
-    url: "https://www.charme.ma",
-  },
-  {
-    tag: "TRANSPORT",
-    title: "Chauffeur München",
-    desc: "Premium chauffeur service platform. Automated booking and elegant design.",
-    bg: "from-neutral-100 to-neutral-200",
-    url: "https://www.charme.ma",
-  },
-  {
-    tag: "AUTOMOTIVE",
-    title: "Car Company",
-    desc: "Digitization of a used car dealership. Modern inventory display and fast performance.",
-    bg: "from-gray-100 to-gray-200",
-    url: "https://www.charme.ma",
-  },
+  // {
+  //   tag: "PHOTOGRAPHY",
+  //   title: "NanoPictures",
+  //   desc: "Professional photography from Kassel. Weddings, couple and family portraits with 100+ documented events.",
+  //   bg: "from-stone-100 to-stone-200",
+  //   bgImg: "/assets/project-images/charme.png",
+  //   url: "https://www.charme.ma",
+  // },
+  // {
+  //   tag: "FINANCE",
+  //   title: "Propvex Capital",
+  //   desc: "Investment and capital management. Professional financial platform with elegant design.",
+  //   bg: "from-zinc-100 to-zinc-200",
+  //   bgImg: "/assets/project-images/charme.png",
+  //   url: "https://www.charme.ma",
+  // },
+  // {
+  //   tag: "GASTRONOMY",
+  //   title: "Steakclub New York",
+  //   desc: "Exclusive steakhouse website with modern reservation system and digital menu.",
+  //   bg: "from-red-50 to-red-100",
+  //   bgImg: "/assets/project-images/charme.png",
+  //   url: "https://www.charme.ma",
+  // },
+  // {
+  //   tag: "TRANSPORT",
+  //   title: "Chauffeur München",
+  //   desc: "Premium chauffeur service platform. Automated booking and elegant design.",
+  //   bg: "from-neutral-100 to-neutral-200",
+  //   bgImg: "/assets/project-images/charme.png",
+  //   url: "https://www.charme.ma",
+  // },
+  // {
+  //   tag: "AUTOMOTIVE",
+  //   title: "Car Company",
+  //   desc: "Digitization of a used car dealership. Modern inventory display and fast performance.",
+  //   bg: "from-gray-100 to-gray-200",
+  //   bgImg: "/assets/project-images/charme.png",
+  //   url: "https://www.charme.ma",
+  // },
 ];
 
 const REVIEWS: Review[] = [
@@ -112,67 +120,10 @@ const INDUSTRIES = [
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-black/30 text-xs uppercase tracking-widest mb-3 font-medium">
-      {children}
-    </p>
-  );
-}
+
 
 // ─── Navbar ──────────────────────────────────────────────────────────────────
-function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-5 bg-white/80 backdrop-blur-md border-b border-black/5">
-      <span className="text-black font-bold text-xl tracking-tight">
-        Wibify<span className="text-black/20">.</span>
-      </span>
 
-      <div className="hidden md:flex items-center gap-8">
-        {NAV_LINKS.map((l) => (
-          <a key={l} href={`#${l.toLowerCase()}`}
-            className="text-sm text-black/50 hover:text-black transition-colors duration-200">
-            {l}
-          </a>
-        ))}
-      </div>
-
-      <a href="#contact"
-        className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/15 text-sm text-black hover:bg-black hover:text-white transition-all duration-300">
-        Get a Quote
-      </a>
-
-      <button onClick={() => setMenuOpen(!menuOpen)}
-        className="md:hidden text-black/60 hover:text-black">
-        <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-          {menuOpen
-            ? <path d="M6 6l12 12M6 18L18 6" />
-            : <path d="M4 6h16M4 12h16M4 18h16" />}
-        </svg>
-      </button>
-
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 right-0 bg-white border-b border-black/5 flex flex-col p-6 gap-4 shadow-lg">
-            {NAV_LINKS.map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMenuOpen(false)}
-                className="text-black/60 hover:text-black text-sm">{l}</a>
-            ))}
-            <a href="#contact"
-              className="mt-2 px-4 py-2 rounded-full border border-black/15 text-sm text-black text-center hover:bg-black hover:text-white transition-all duration-300">
-              Get a Quote
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
-}
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -218,7 +169,7 @@ function Hero() {
             <path
               d="M2 8.5C50 2 150 2 198 8.5"
               stroke="currentColor"
-              stroke-width="4"
+              strokeWidth="4"
               stroke-linecap="round"
             ></path>
           </svg>
@@ -234,7 +185,7 @@ function Hero() {
             href="#contact"
             // whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="relative inline-flex items-center justify-center px-7 py-4 bg-gradient-to-b from-[#2a2a2a] via-[#111] to-black text-white font-semibold rounded-2xl text-sm overflow-hidden group"
+            className="relative inline-flex items-center justify-center px-7 py-4 bg-gradient-to-b from-[#2a2a2a] via-[#111] to-black text-white font-semibold rounded-2xl text-sm overflow-hidden w-[250px] group"
             style={{
               boxShadow:
                 "0 3px 10px 1px rgba(255,255,255,0.3) inset, 0 1px 2px 1.5px rgba(255,255,255,0.5) inset, 0 1px 0 rgba(255,255,255,0.12) inset, 0 0px 0px 4px rgba(0,0,0,0.2)",
@@ -246,21 +197,13 @@ function Hero() {
             {/* Green inner glow reflection */}
             <span className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
 
-            {/* Text: default */}
             <span className="flex items-center gap-2 absolute transition-all duration-250 group-hover:opacity-0 group-hover:blur-md ">
               <Sparkles size={14} />
               Get Free Mockup
             </span>
 
-            {/* Text: hover */}
             <span className="relative flex items-center justify-center gap-2 opacity-0 blur-md group-hover:opacity-100 group-hover:blur-none transition-all duration-250">
-              Start Now 
-            </span>
-
-            {/* Invisible spacer to hold width */}
-            <span className="invisible flex items-center gap-2">
-              <Sparkles size={14} />
-              Get Free Mockup
+              Start Now
             </span>
           </motion.a>
           {/* <motion.a
@@ -278,23 +221,7 @@ function Hero() {
 }
 
 // ─── Tech Marquee ─────────────────────────────────────────────────────────────
-function TechMarquee() {
-  const doubled = [...TECH_LOGOS, ...TECH_LOGOS];
-  return (
-    <div className="py-12 border-y border-black/5 overflow-hidden bg-gray-50">
-      <motion.div
-        className="flex gap-12 whitespace-nowrap"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ repeat: Infinity, duration: 20, ease: "linear" }}>
-        {doubled.map((logo, i) => (
-          <span key={i} className="text-black/20 text-sm font-medium tracking-widest uppercase shrink-0">
-            {logo}
-          </span>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
+
 
 // ─── Portfolio ───────────────────────────────────────────────────────────────
 function Portfolio() {
@@ -302,7 +229,7 @@ function Portfolio() {
     <section id="portfolio" className="py-24 px-6 md:px-10 bg-white">
       <SectionLabel>Portfolio</SectionLabel>
       <h2 className="text-4xl md:text-5xl font-black text-black tracking-tight mb-2">
-        Portfolio<span className="text-black/15">.</span>
+        Portfolio<span className="text-green-400">.</span>
       </h2>
       <p className="text-black/35 mb-14 text-sm">
         Selected work. From local businesses to international platforms.
@@ -363,11 +290,12 @@ function Portfolio() {
 
             {/* ── Site preview ── */}
             <div
-              className={`w-full h-40 bg-gradient-to-br ${item.bg} flex items-center justify-center`}
+              className={`w-full h-60 bg-gradient-to-br ${item.bg} flex items-center justify-center`}
             >
-              <span className="text-black/15 text-xs uppercase tracking-widest">
+              <img src={item.bgImg} className="w-full h-full" alt="" />
+              {/* <span className="text-black/15 text-xs uppercase tracking-widest">
                 {item.title}
-              </span>
+              </span> */}
             </div>
 
             {/* ── Card meta ── */}
@@ -381,7 +309,7 @@ function Portfolio() {
               <p className="text-black/45 text-xs leading-relaxed">
                 {item.desc}
               </p>
-              <div className="mt-3 flex items-center gap-1.5 text-black/30 text-xs group-hover:text-black/60 transition-colors">
+              <a href={item.url} className="mt-3 flex items-center gap-1.5 text-black/30 text-xs group-hover:text-black/60 transition-colors">
                 View project
                 <svg
                   width="11"
@@ -393,7 +321,7 @@ function Portfolio() {
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </div>
+              </a>
             </div>
           </motion.div>
         ))}
@@ -453,7 +381,7 @@ function CTA() {
           </div>
           <div>
             <p className="text-black/25 text-xs uppercase tracking-widest mb-1">Location</p>
-            <p className="text-black text-sm font-semibold">Bocholt, Germany</p>
+            <p className="text-black text-sm font-semibold">Rabat, Morocco</p>
           </div>
         </div>
       </motion.div>
@@ -468,12 +396,19 @@ function Testimonials() {
       <SectionLabel>Google Reviews</SectionLabel>
       <div className="flex flex-wrap items-end gap-4 mb-14">
         <h2 className="text-4xl md:text-5xl font-black text-black tracking-tight">
-          What Clients Say<span className="text-black/15">.</span>
+          What Clients Say<span className="text-green-400">.</span>
         </h2>
         <div className="mb-2 flex items-center gap-2">
           <div className="flex gap-0.5">
             {[...Array(5)].map((_, i) => (
-              <svg key={i} width="14" height="14" fill="currentColor" viewBox="0 0 20 20" className="text-yellow-400">
+              <svg
+                key={i}
+                width="14"
+                height="14"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                className="text-yellow-400"
+              >
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             ))}
@@ -484,12 +419,14 @@ function Testimonials() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {REVIEWS.map((r, i) => (
-          <motion.div key={r.name}
+          <motion.div
+            key={r.name}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08, duration: 0.5 }}
-            className="p-6 rounded-2xl border border-black/5 bg-white hover:border-black/10 transition-colors duration-300 shadow-sm">
+            className="p-6 rounded-2xl border border-black/5 bg-white hover:border-black/10 transition-colors duration-300 shadow-sm"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-9 h-9 rounded-full bg-black/8 flex items-center justify-center text-xs font-bold text-black/50">
                 {r.initials}
@@ -500,7 +437,14 @@ function Testimonials() {
               </div>
               <div className="ml-auto flex gap-0.5">
                 {[...Array(5)].map((_, j) => (
-                  <svg key={j} width="11" height="11" fill="currentColor" viewBox="0 0 20 20" className="text-yellow-400">
+                  <svg
+                    key={j}
+                    width="11"
+                    height="11"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    className="text-yellow-400"
+                  >
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 ))}
@@ -573,25 +517,36 @@ function Faq() {
     <section id="faq" className="py-24 px-6 md:px-10 bg-gray-50">
       <SectionLabel>FAQ</SectionLabel>
       <h2 className="text-4xl md:text-5xl font-black text-black tracking-tight mb-2">
-        FAQ<span className="text-black/15">.</span>
+        FAQ<span className="text-green-400">.</span>
       </h2>
-      <p className="text-black/35 mb-14 text-sm">Straight answers to your questions.</p>
+      <p className="text-black/35 mb-14 text-sm">
+        Straight answers to your questions.
+      </p>
 
       <div className="max-w-3xl space-y-2">
         {FAQ.map((item, i) => (
-          <motion.div key={item.q}
+          <motion.div
+            key={item.q}
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.06 }}
-            className={`rounded-2xl border transition-all duration-300 overflow-hidden ${open === i ? "border-black/12 bg-white shadow-sm" : "border-black/5 bg-white/60"}`}>
-            <button onClick={() => setOpen(open === i ? null : i)}
-              className="w-full flex items-center justify-between p-6 text-left">
+            className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+              open === i
+                ? "border-black/12 bg-white shadow-sm"
+                : "border-black/5 bg-white/60"
+            }`}
+          >
+            <button
+              onClick={() => setOpen(open === i ? null : i)}
+              className="w-full flex items-center justify-between p-6 text-left"
+            >
               <span className="text-black font-semibold text-sm">{item.q}</span>
               <motion.span
                 animate={{ rotate: open === i ? 45 : 0 }}
                 transition={{ duration: 0.2 }}
-                className="text-black/30 text-xl ml-4 shrink-0">
+                className="text-black/30 text-xl ml-4 shrink-0"
+              >
                 +
               </motion.span>
             </button>
@@ -601,8 +556,11 @@ function Faq() {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
-                  <p className="px-6 pb-6 text-black/45 text-sm leading-relaxed">{item.a}</p>
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <p className="px-6 pb-6 text-black/45 text-sm leading-relaxed">
+                    {item.a}
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -619,31 +577,41 @@ function Expertise() {
     <section id="services" className="py-24 px-6 md:px-10 bg-white">
       <SectionLabel>Expertise</SectionLabel>
       <h2 className="text-4xl md:text-5xl font-black text-black tracking-tight mb-14">
-        What we do<span className="text-black/15">.</span>
+        What we do<span className="text-green-400">.</span>
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
         <div>
           <div className="grid grid-cols-2 gap-4 mb-8">
             {[
-              { v: "50+",   l: "Projects completed" },
+              { v: "50+", l: "Projects completed" },
               { v: "7.5M+", l: "Users reached" },
-              { v: "100%",  l: "Client satisfaction" },
-              { v: "24h",   l: "Avg. response time" },
+              { v: "100%", l: "Client satisfaction" },
+              { v: "24h", l: "Avg. response time" },
             ].map((s) => (
-              <div key={s.l} className="p-5 rounded-2xl border border-black/5 bg-gray-50">
+              <div
+                key={s.l}
+                className="p-5 rounded-2xl border border-black/5 bg-gray-50"
+              >
                 <p className="text-3xl font-black text-black">{s.v}</p>
                 <p className="text-black/40 text-xs mt-1">{s.l}</p>
               </div>
             ))}
           </div>
 
-          <h3 className="text-black/25 font-bold mb-4 text-xs uppercase tracking-widest">Industry Experience</h3>
+          <h3 className="text-black/25 font-bold mb-4 text-xs uppercase tracking-widest">
+            Industry Experience
+          </h3>
           <div className="space-y-2">
             {INDUSTRIES.map((ind) => (
-              <div key={ind.label} className="flex items-center justify-between py-2 border-b border-black/5">
+              <div
+                key={ind.label}
+                className="flex items-center justify-between py-2 border-b border-black/5"
+              >
                 <span className="text-black/55 text-sm">{ind.label}</span>
-                <span className="text-black/25 text-xs">{ind.count} projects</span>
+                <span className="text-black/25 text-xs">
+                  {ind.count} projects
+                </span>
               </div>
             ))}
           </div>
@@ -651,19 +619,28 @@ function Expertise() {
 
         <div className="space-y-3">
           {SERVICES.map((s, i) => (
-            <motion.div key={s.title}
+            <motion.div
+              key={s.title}
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="p-6 rounded-2xl border border-black/5 bg-gray-50 hover:border-black/10 hover:bg-gray-100/50 transition-all duration-300 group">
+              className="p-6 rounded-2xl border border-black/5 bg-gray-50 hover:border-black/10 hover:bg-gray-100/50 transition-all duration-300 group"
+            >
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="text-black font-bold mb-1">{s.title}</h3>
                   <p className="text-black/40 text-sm">{s.desc}</p>
                 </div>
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"
-                  className="text-black/20 group-hover:text-black/50 transition-colors mt-1 shrink-0 ml-4">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                  className="text-black/20 group-hover:text-black/50 transition-colors mt-1 shrink-0 ml-4"
+                >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
@@ -676,86 +653,10 @@ function Expertise() {
 }
 
 // ─── About ───────────────────────────────────────────────────────────────────
-function About() {
-  return (
-    <section id="about" className="py-24 px-6 md:px-10 bg-gray-50">
-      <SectionLabel>About</SectionLabel>
-      <h2 className="text-4xl md:text-5xl font-black text-black tracking-tight mb-14">
-        The mind behind<span className="text-black/15">.</span>
-      </h2>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="relative inline-block">
-          <div className="w-48 h-48 md:w-64 md:h-64 rounded-3xl bg-gradient-to-br from-gray-200 to-gray-300 border border-black/8 flex items-center justify-center text-5xl font-black text-black/10">
-            KB
-          </div>
-          <div className="absolute -bottom-4 -right-4 px-4 py-2 rounded-2xl bg-white border border-black/8 shadow-sm">
-            <p className="text-black font-bold text-sm">Kerim Bilin</p>
-            <p className="text-black/35 text-xs">Founder & Developer · 19</p>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-2xl font-black text-black mb-4">One mind, clear vision.</h3>
-          <p className="text-black/45 leading-relaxed mb-6">
-            I'm Kerim Bilin — the sole mind behind Wibify. No big team, no unnecessary meetings, no wasted hours.
-            As a young developer with innovative thinking, I work efficiently, with quality, and fast.
-          </p>
-          <p className="text-black/45 leading-relaxed mb-8">
-            I manage and execute everything myself to deliver the best result.
-            I'm the best partner you'll find when it comes to excellence.
-          </p>
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              { v: "7.5M+", l: "Unique Users" },
-              { v: "3.4M+", l: "Page Views" },
-              { v: "100%",  l: "Satisfied Clients" },
-            ].map((s) => (
-              <div key={s.l}>
-                <p className="text-2xl font-black text-black">{s.v}</p>
-                <p className="text-black/30 text-xs mt-0.5">{s.l}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-    </section>
-  );
-}
 
 // ─── Footer ──────────────────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer className="border-t border-black/5 py-14 px-6 md:px-10 bg-white">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-        <div>
-          <span className="text-black font-bold text-lg tracking-tight">
-            Wibify<span className="text-black/20">.</span>
-          </span>
-          <p className="text-black/30 text-xs mt-1">Web Design & Software Development</p>
-        </div>
-        <div className="flex flex-wrap gap-6">
-          {["Services", "About", "Portfolio", "Contact"].map((l) => (
-            <a key={l} href={`#${l.toLowerCase()}`}
-              className="text-black/30 hover:text-black/60 text-sm transition-colors">{l}</a>
-          ))}
-        </div>
-        <div className="text-black/25 text-xs">
-          <p>© 2025 Wibify</p>
-          <div className="flex gap-4 mt-1">
-            <a href="#" className="hover:text-black/45 transition-colors">Imprint</a>
-            <a href="#" className="hover:text-black/45 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-black/45 transition-colors">Terms</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
+
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {

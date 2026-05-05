@@ -45,6 +45,14 @@ const PORTFOLIO: PortfolioItem[] = [
     bgImg: "/assets/project-images/charme.png",
     url: "https://www.charme.ma",
   },
+  {
+    tag: "Saas",
+    title: "Ai Saas: Video Summary ai",
+    desc: "An Ai Saas for video summary",
+    bg: "from-slate-100 to-slate-200",
+    bgImg: "/assets/project-images/taskAi.png",
+    url: "http://task-ai.arma-dev.ma/",
+  },
   // {
   //   tag: "PHOTOGRAPHY",
   //   title: "NanoPictures",

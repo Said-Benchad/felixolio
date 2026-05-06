@@ -5,6 +5,9 @@ const NAV_LINKS = ["Portfolio", "Services", "FAQ", "About"];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const logoLeft = "<"
+  const logoRight = ">"
+  const logo = "felix studio"
   return (
     <nav className="fixed w-full top-5 left-0 right-0 flex items-center justify-center z-50">
       <div
@@ -12,7 +15,8 @@ export default function Navbar() {
         className="max-w-[1400px] w-full flex items-center justify-between bg-white/80 backdrop-blur-md border-1 border-black/5 px-4 md:px-10 py-4 rounded-[24px]"
       >
         <span className="text-black font-bold text-xl italic tracking-tight">
-          Build<span className="text-green-400">:</span>
+          {logo}
+          <span className="text-green-400">.</span>
         </span>
 
         <div className="hidden md:flex items-center gap-8">

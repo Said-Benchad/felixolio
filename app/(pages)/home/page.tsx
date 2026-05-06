@@ -8,6 +8,8 @@ import TechMarquee from "../components/TechMarquee";
 import Footer from "../components/footer/Footer";
 import SectionLabel from "../components/SectionTitle";
 import About from "../components/about/AboutSection";
+import { Skiper31 } from "../components/skillsSection";
+import ReactLenis from "lenis/react";
 
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -669,18 +671,23 @@ function Expertise() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {
   return (
-    <main className="bg-white min-h-screen text-black antialiased">
-      <Navbar />
-      <Hero />
-      <TechMarquee />
-      <Portfolio />
-      <CTA />
-      <Testimonials />
-      <Results />
-      <Faq />
-      <Expertise />
-      <About />
-      <Footer />
-    </main>
+    <ReactLenis root>
+      <main className="bg-white min-h-screen text-black antialiased">
+        <Navbar />
+        <Hero />
+        <TechMarquee />
+        <Portfolio />
+        <div className="w-full relative">
+          <Skiper31 />
+        </div>
+        <CTA />
+        <Testimonials />
+        <Results />
+        <Faq />
+        <Expertise />
+        <About />
+        <Footer />
+      </main>
+    </ReactLenis>
   );
 }
